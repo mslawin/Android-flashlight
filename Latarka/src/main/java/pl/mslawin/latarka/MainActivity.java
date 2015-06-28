@@ -2,6 +2,7 @@ package pl.mslawin.latarka;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.View;
@@ -56,4 +57,15 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (isFLashLightOn) {
+            if (camera == null) {
+                camera = Camera.open();
+                Camera.Parameters p = camera.getParameters();
+                p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                camera.setParameters(p);
+            }
+        }
+    }
 }
